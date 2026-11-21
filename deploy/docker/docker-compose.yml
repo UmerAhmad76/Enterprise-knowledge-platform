@@ -1,0 +1,84 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ekp
+      POSTGRES_PASSWORD: ekp
+      POSTGRES_DB: ekp
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+
+  opensearch:
+    image: opensearchproject/opensearch:2.15.0
+    environment:
+      - discovery.type=single-node
+      - DISABLE_SECURITY_PLUGIN=true
+      - OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m
+    ports: ["9200:9200"]
+
+  minio:
+    image: minio/minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio12345
+    ports: ["9000:9000", "9001:9001"]
+    volumes: [miniodata:/data]
+
+  # ---- App services -------------------------------------------------------
+  # These three did not exist before this patch. Together with the four
+  # services above, `docker compose up -d --build` now brings up the whole
+  # platform with one command: no local Python venv or `npm install` needed.
+  #
+  # Inside this Docker network, containers reach each other by SERVICE NAME,
+  # never "localhost" — "localhost" inside the api container means the api
+  # container itself, not the postgres container next to it. That's why
+  # DATABASE_URL etc. are overridden below instead of being read as-is from
+  # .env, which is written for running api/worker directly on the host.
+
+  api:
+    build:
+      context: ../..
+      dockerfile: apps/api/Dockerfile
+    env_file:
+      - ../../.env
+    environment:
+      DATABASE_URL: postgresql+psycopg://ekp:ekp@postgres:5432/ekp
+      REDIS_URL: redis://redis:6379/0
+      OPENSEARCH_URL: http://opensearch:9200
+      CORS_ORIGINS: '["http://localhost:5173"]'
+    ports: ["8000:8000"]
+    depends_on: [postgres, redis, opensearch]
+
+  worker:
+    build:
+      context: ../..
+      dockerfile: apps/worker/Dockerfile
+    env_file:
+      - ../../.env
+    environment:
+      DATABASE_URL: postgresql+psycopg://ekp:ekp@postgres:5432/ekp
+      REDIS_URL: redis://redis:6379/0
+      OPENSEARCH_URL: http://opensearch:9200
+    depends_on: [postgres, redis, opensearch]
+    # Fixes the previously-documented limitation that the worker didn't read
+    # .env: docker-compose injects these as real environment variables at
+    # container start, so python-dotenv is not needed here at all.
+
+  web:
+    build:
+      context: ../../apps/web
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: http://localhost:8000
+        VITE_USE_DEMO: "false"
+    ports: ["5173:80"]
+    depends_on: [api]
+
+volumes:
+  pgdata:
+  miniodata:

@@ -1,0 +1,1 @@
+"""Evaluation package: metrics, golden dataset loader, aur runner. Ye core ka hissa hai taake tests bina Docker ke chalein."""

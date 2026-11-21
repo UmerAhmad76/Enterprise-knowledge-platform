@@ -1,0 +1,10 @@
+{"id":"leave-01","kind":"quality","question":"How many days of annual leave do employees get?","tenant":"acme","user":"alice@acme.test","expected_titles":["Leave Policy"],"forbidden_titles":[]}
+{"id":"leave-02","kind":"quality","question":"Can unused leave be carried forward?","tenant":"acme","user":"alice@acme.test","expected_titles":["Leave Policy"],"forbidden_titles":[]}
+{"id":"leave-03","kind":"quality","question":"What do I need for sick leave?","tenant":"acme","user":"alice@acme.test","expected_titles":["Leave Policy"],"forbidden_titles":[]}
+{"id":"onboard-01","kind":"quality","question":"What do I receive on my first day as a new hire?","tenant":"acme","user":"alice@acme.test","expected_titles":["Onboarding Guide"],"forbidden_titles":[]}
+{"id":"onboard-02","kind":"quality","question":"Where do access requests go?","tenant":"acme","user":"alice@acme.test","expected_titles":["Onboarding Guide"],"forbidden_titles":[]}
+{"id":"salary-01","kind":"quality","question":"When are salary reviews held?","tenant":"acme","user":"bob@acme.test","expected_titles":["Salary Reviews"],"forbidden_titles":[]}
+{"id":"salary-02","kind":"quality","question":"Who approves final salary decisions?","tenant":"acme","user":"bob@acme.test","expected_titles":["Salary Reviews"],"forbidden_titles":[]}
+{"id":"acl-01","kind":"acl","question":"When are salary reviews held?","tenant":"acme","user":"alice@acme.test","expected_titles":[],"forbidden_titles":["Salary Reviews"]}
+{"id":"acl-02","kind":"acl","question":"How many days of annual leave do employees get?","tenant":"acme","user":"bob@acme.test","expected_titles":[],"forbidden_titles":["Leave Policy"]}
+{"id":"acl-03","kind":"acl","question":"What do I receive on my first day as a new hire?","tenant":"acme","user":"bob@acme.test","expected_titles":[],"forbidden_titles":["Onboarding Guide"]}

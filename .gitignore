@@ -1,0 +1,21 @@
+eval/reports/*
+!eval/reports/.gitkeep
+__pycache__/
+*.py[cod]
+.env
+@"
+eval/reports/*
+!eval/reports/.gitkeep
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+node_modules/
+*.egg-info/
+.venv/
+venv/
+dist/
+.pytest_cache/
+.ruff_cache/
+"@ | Set-Content -Encoding utf8 .gitignore
