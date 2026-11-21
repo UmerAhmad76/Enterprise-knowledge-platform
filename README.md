@@ -8,7 +8,10 @@ Company documents are indexed from local folders, with Confluence and Jira integ
 
 ## Screenshots
 
-_(Add screenshots of the chat interface, citations, and ACL access denial here.)_
+![Login](docs/screenshots/login.png)
+![Chat with citations](docs/screenshots/chat.png)
+
+> Frontend demo mode screenshots. The full flow (ACL-filtered retrieval, Claude answers) needs the backend and OpenSearch running.
 
 ## Key Features
 
