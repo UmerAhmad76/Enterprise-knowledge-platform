@@ -1,13 +1,13 @@
 """POST /feedback: user apne hi sawal par thumbs up/down de sakta hai. Doosre user ya tenant ka sawal 404 deta hai."""
+from core.acl.principals import Principals
+from core.common.errors import NotFoundError
+from core.feedback.service import record_feedback
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 
 from app.db import get_db
 from app.dependencies import get_principals
 from app.schemas.feedback import FeedbackRequest, FeedbackResponse
-from core.acl.principals import Principals
-from core.common.errors import NotFoundError
-from core.feedback.service import record_feedback
 
 router = APIRouter(tags=["feedback"])
 

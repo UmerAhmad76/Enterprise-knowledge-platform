@@ -2,6 +2,10 @@
 import time
 import uuid
 
+from core.acl.principals import Principals
+from core.db.models import ChatQuery
+from core.generation.answer import SourceChunk, generate_answer
+from core.retrieval.pipeline import retrieve
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
@@ -9,10 +13,6 @@ from app.db import get_db
 from app.dependencies import get_principals
 from app.schemas.chat import ChatRequest, ChatResponse, CitationOut
 from app.services import ChatServices, get_chat_services
-from core.acl.principals import Principals
-from core.db.models import ChatQuery
-from core.generation.answer import SourceChunk, generate_answer
-from core.retrieval.pipeline import retrieve
 
 router = APIRouter(tags=["chat"])
 

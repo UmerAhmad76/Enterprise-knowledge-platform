@@ -1,6 +1,9 @@
 """Request-scoped dependencies: verified identity, resolved ACL principals, and the active embedding version."""
 import uuid
 
+from core.acl.principals import Principals, resolve_principals
+from core.common.errors import AccessDeniedError, NotFoundError
+from core.db.models import EmbeddingVersion
 from fastapi import Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -8,9 +11,6 @@ from sqlalchemy.orm import Session
 from app.auth import AuthContext, get_auth_context
 from app.db import get_db
 from app.services import ChatServices, get_chat_services
-from core.acl.principals import Principals, resolve_principals
-from core.common.errors import AccessDeniedError, NotFoundError
-from core.db.models import EmbeddingVersion
 
 
 def get_principals(

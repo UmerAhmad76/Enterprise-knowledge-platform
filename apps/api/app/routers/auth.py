@@ -1,4 +1,5 @@
 """Auth routes. The dev-token login is compiled out of production by returning 404."""
+from core.db.models import Tenant, User
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -7,7 +8,6 @@ from app.auth import create_access_token
 from app.config import get_settings
 from app.db import get_db
 from app.schemas.auth import DevTokenRequest, TokenResponse
-from core.db.models import Tenant, User
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 

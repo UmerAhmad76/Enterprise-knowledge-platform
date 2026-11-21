@@ -1,7 +1,7 @@
 """JWT creation and verification, plus the dependency that yields the verified identity."""
 import uuid
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 import jwt
 from fastapi import Depends, HTTPException
@@ -23,7 +23,7 @@ class AuthContext:
 def create_access_token(user_id: uuid.UUID, tenant_id: uuid.UUID, expires_minutes: int = 60) -> str:
     """Signed token banata hai. Dev login aur tests dono isi function ko use karte hen."""
     settings = get_settings()
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     payload = {
         "sub": str(user_id),
         "tenant": str(tenant_id),

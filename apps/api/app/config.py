@@ -1,6 +1,7 @@
 """Central application settings, loaded from environment variables (.env in dev)."""
 from functools import lru_cache
 
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -24,6 +25,17 @@ class Settings(BaseSettings):
     llm_provider: str = "fake"  # fake | anthropic
     llm_model: str = "claude-sonnet-4-5"
     anthropic_api_key: str | None = None
+
+    @model_validator(mode="after")
+    def _reject_weak_secret_outside_dev(self) -> "Settings":
+        """Production mein default ya chhota JWT secret hua to app start hi nahi hogi."""
+        if self.environment != "dev":
+            if self.jwt_secret.startswith("dev-only") or len(self.jwt_secret) < 32:
+                raise ValueError(
+                    "JWT_SECRET must be set to a random value of at least 32 characters "
+                    "when ENVIRONMENT is not 'dev'"
+                )
+        return self
 
 
 @lru_cache

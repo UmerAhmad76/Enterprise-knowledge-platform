@@ -229,7 +229,7 @@ A JSON evaluation report is also generated inside `eval/reports/`.
 
 1. Complete Docker-based integration testing and establish the evaluation baseline.
 2. Integrate a real embedding model and measure answer quality using Claude.
-3. Add Dockerfiles and Kubernetes deployment manifests.
+3. Add Kubernetes/Helm deployment manifests (Dockerfiles are already included).
 4. Implement Confluence and Jira document connectors.
 5. Develop an administration API and integrate OIDC-based authentication.
 

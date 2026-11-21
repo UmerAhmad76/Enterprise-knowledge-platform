@@ -2,7 +2,6 @@
 from dataclasses import dataclass
 from functools import lru_cache
 
-from app.config import Settings, get_settings
 from core.embeddings.base import Embedder
 from core.embeddings.fake import FakeEmbedder
 from core.llm.base import LLM
@@ -12,6 +11,8 @@ from core.retrieval.reranker import NoopReranker, Reranker
 from core.search_index.client import make_opensearch_client
 from core.search_index.index_manager import ACTIVE_ALIAS
 from core.search_index.search import make_search
+
+from app.config import Settings, get_settings
 
 
 @dataclass(frozen=True)

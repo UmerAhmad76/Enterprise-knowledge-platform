@@ -17,6 +17,9 @@ jobs:
       - name: Install packages
         run: pip install -e "./packages/core[dev]" -e "./apps/api[dev]"
 
+      - name: Lint
+        run: ruff check apps/api/app
+
       - name: Core tests
         working-directory: packages/core
         run: pytest -q

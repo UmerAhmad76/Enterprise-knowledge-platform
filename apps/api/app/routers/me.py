@@ -1,12 +1,12 @@
 """Identity endpoint: returns who the caller is and which groups they belong to."""
+from core.acl.principals import Principals
+from core.db.models import User
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from app.db import get_db
 from app.dependencies import get_principals
 from app.schemas.auth import MeResponse
-from core.acl.principals import Principals
-from core.db.models import User
 
 router = APIRouter(tags=["identity"])
 
