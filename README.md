@@ -107,11 +107,9 @@ pip install -e ".\apps\api[dev]"
 
 ### 4. Apply Database Migrations
 
-```powershell
 cd packages\core
-alembic upgrade head
+alembic -c core/alembic.ini upgrade head
 cd ..\..
-```
 
 ### 5. Seed Development Data
 
