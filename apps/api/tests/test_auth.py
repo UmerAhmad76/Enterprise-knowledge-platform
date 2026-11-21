@@ -46,6 +46,7 @@ def test_dev_token_is_hidden_outside_dev(monkeypatch):
     # Production simulate: environment prod hone par login route 404 de
     get_settings.cache_clear()
     monkeypatch.setenv("ENVIRONMENT", "prod")
+    monkeypatch.setenv("JWT_SECRET", "x" * 40)  # prod mein default secret allowed nahi
     get_settings.cache_clear()
     try:
         r = client.post("/auth/dev-token", json={"tenant_slug": "acme", "email": "a@b.c"})
